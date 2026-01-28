@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Separator } from '@/components/ui/separator.jsx'
-import { Star, Users, Globe, Heart, BookOpen, Award, ArrowRight, ChevronDown, Sun, Moon, Zap, Shield, Users2, Home, Globe2, Brain } from 'lucide-react'
+import { Star, Users, Globe, Heart, BookOpen, Award, ArrowRight, ChevronDown, Sun, Moon, Zap, Shield, Users2, Home, Globe2, Brain, AlertTriangle, Briefcase, CheckCircle, Scale } from 'lucide-react'
 
 function App() {
   const [currentQuiz, setCurrentQuiz] = useState(0)
@@ -15,6 +15,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
+  
+  // Các state và ref cũ của bạn
   const videoRef = useRef(null)
   const [videoCanPlay, setVideoCanPlay] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
@@ -26,7 +28,7 @@ function App() {
   const introHeadingRef = useRef(null)
   const lastFocusedRef = useRef(null)
 
-  // Navigation items cho nội dung mới
+  // Navigation items: Đã thêm mục "Tình huống"
   const navItems = [
     { id: 'hero', label: 'Trang chủ' },
     { id: 'mac-lenin', label: 'Mác-Lênin' },
@@ -34,6 +36,7 @@ function App() {
     { id: 'quan-he-dan-toc', label: 'Dân tộc & Tôn giáo' },
     { id: 'khai-niem-gia-dinh', label: 'Khái niệm Gia đình' },
     { id: 'gia-dinh', label: 'Gia đình' },
+    { id: 'tinh-huong', label: 'Tình huống' }, // Mới thêm
     { id: 'quiz', label: 'Quiz' },
     { id: 'prove', label: 'AI Transparency' }
   ]
@@ -53,7 +56,7 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // Quiz mới về tôn giáo và gia đình
+  // Quiz cũ của bạn
   const quizQuestions = [
     {
       question: 'Theo chủ nghĩa Mác-Lênin, tôn giáo có nguồn gốc từ những yếu tố nào?',
@@ -275,6 +278,24 @@ function App() {
                   MLN131
                 </h1>
               </div>
+              
+              {/* Desktop Nav - Hiển thị items */}
+              <div className="hidden xl:flex items-center gap-1">
+                {navItems.map((item) => (
+                   <button
+                   key={item.id}
+                   onClick={() => scrollToSection(item.id)}
+                   className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${
+                     activeSection === item.id
+                       ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-yellow-400'
+                       : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                   }`}
+                 >
+                   {item.label}
+                 </button>
+                ))}
+              </div>
+
               <button
                 onClick={toggleDarkMode}
                 className="p-2.5 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 shadow-md hover:shadow-lg"
@@ -286,9 +307,8 @@ function App() {
           </div>
         </nav>
 
-        {/* Hero Section - Redesigned */}
+        {/* Hero Section */}
         <section id="hero" className="relative min-h-screen bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center overflow-hidden pt-20">
-          {/* Animated background elements */}
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-yellow-400 rounded-full filter blur-3xl opacity-10 animate-pulse"></div>
             <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-orange-400 rounded-full filter blur-3xl opacity-10 animate-pulse" style={{animationDelay: '2s'}}></div>
@@ -357,7 +377,7 @@ function App() {
           </div>
         </section>
 
-        {/* Section 1: Mác-Lênin - Đã sửa lỗi hiển thị */}
+        {/* Section 1: Mác-Lênin */}
         <section id="mac-lenin" className="relative py-24 bg-[#111219]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="text-center mb-16">
@@ -385,7 +405,7 @@ function App() {
 
                 {/* Card Nguồn gốc */}
                 <div className="bg-[#1a1c29] rounded-3xl p-8 border border-white/5 shadow-xl" data-reveal>
-                   <div className="flex items-center gap-4 mb-6">
+                    <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
                       <Zap size={24} />
                     </div>
@@ -429,7 +449,7 @@ function App() {
                 </div>
               </div>
 
-              {/* Tính chất */}
+              {/* Tính chất - Grid Icon */}
               <div className="col-span-1 md:col-span-2 group relative bg-gradient-to-br from-red-700 to-red-800 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden text-white w-full" data-reveal>
                 <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 group-hover:scale-110 transition-transform duration-300"></div>
                 <div className="relative w-full">
@@ -454,7 +474,7 @@ function App() {
                   </div>
                 </div>
               </div>
-
+              
               {/* 4 Nguyên tắc */}
               <div className="col-span-1 md:col-span-2 group relative bg-gradient-to-br from-red-700 to-red-800 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden text-white w-full" data-reveal>
                 <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 group-hover:scale-110 transition-transform duration-300"></div>
@@ -540,8 +560,8 @@ function App() {
                   ))}
                 </div>
               </div>
-
-              {/* Card 2: Chính sách tôn giáo - Quan điểm */}
+              
+               {/* Card 2: Chính sách tôn giáo - Quan điểm */}
               <div className="group p-8 bg-[#1a1c29] hover:bg-[#202232] rounded-3xl border border-white/5 transition-all duration-300 shadow-lg overflow-hidden" data-reveal>
                 <div className="flex items-center gap-4 mb-6">
                   <div className="p-4 bg-purple-500/20 rounded-2xl">
@@ -853,7 +873,7 @@ function App() {
           </div>
         </section>
 
-        {/* Section 4: Gia đình Mới - Đã sửa lỗi hiển thị */}
+        {/* Section 4: Gia đình Mới */}
         <section id="gia-dinh" className="relative py-24 bg-[#111219]">
           <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px]"></div>
 
@@ -908,6 +928,138 @@ function App() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Tình huống Thực tiễn (New) */}
+        <section id="tinh-huong" className="relative py-24 bg-[#0f1016]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div className="text-center mb-16">
+              <Badge className="px-4 py-2 bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 mb-4">CASE STUDY</Badge>
+              <h2 className="text-5xl font-black mb-4 bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                TÌNH HUỐNG THỰC TIỄN
+              </h2>
+              <p className="text-gray-400 text-lg">Quản trị Tôn giáo trong Doanh nghiệp thời kỳ Quá độ</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Bên trái: Tình huống */}
+              <div className="space-y-6" data-reveal>
+                 <Card className="bg-[#1a1c29] border-red-500/30 overflow-hidden">
+                    <div className="bg-red-900/20 p-4 border-b border-red-500/20 flex items-center gap-3">
+                        <AlertTriangle className="text-red-400" />
+                        <h3 className="text-xl font-bold text-red-100">Xung đột: Đức tin & Hiệu suất</h3>
+                    </div>
+                    <CardContent className="p-6 space-y-4">
+                        <div className="flex gap-4">
+                            <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                <Briefcase className="text-blue-400" size={20}/>
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-white mb-1">Nhân vật: Hoàng (HR Manager)</h4>
+                                <p className="text-gray-400 text-sm">Quản lý nhân sự tại tập đoàn dược phẩm đa quốc gia ở vùng giàu truyền thống tôn giáo.</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#111219] p-4 rounded-xl border border-white/5 space-y-3">
+                            <p className="text-gray-300 text-sm italic">"Tôn giáo là chuyện cá nhân, không được phép ảnh hưởng đến năng suất. Chúng ta cần một môi trường 'vô thần' hoàn toàn để vận hành chuyên nghiệp."</p>
+                            <p className="text-right text-xs text-red-400 font-bold">- CEO (Giám đốc điều hành)</p>
+                        </div>
+
+                        <div className="space-y-2">
+                             <div className="flex items-center gap-2 text-sm text-gray-300">
+                                <span className="text-red-400 font-bold">• Sự kiện:</span>
+                                <span>Nhóm nhân viên nòng cốt xin nghỉ lễ tôn giáo đúng đợt kiểm tra chất lượng.</span>
+                             </div>
+                             <div className="flex items-center gap-2 text-sm text-gray-300">
+                                <span className="text-red-400 font-bold">• Nguy cơ:</span>
+                                <span>Thế lực bên ngoài kích động, vu khống công ty "đàn áp tôn giáo".</span>
+                             </div>
+                        </div>
+                    </CardContent>
+                 </Card>
+                 
+                 <div className="bg-[#1a1c29] rounded-2xl p-6 border border-white/5">
+                     <h3 className="text-lg font-bold text-white mb-3">Góc nhìn Mác-Lênin về Nguồn gốc</h3>
+                     <ul className="space-y-2">
+                        <li className="flex gap-2 text-sm text-gray-400">
+                            <span className="text-indigo-400 font-bold">1.</span>
+                            <span>Kinh tế – xã hội: Bất bình đẳng, áp lực đời sống.</span>
+                        </li>
+                        <li className="flex gap-2 text-sm text-gray-400">
+                            <span className="text-indigo-400 font-bold">2.</span>
+                            <span>Nhận thức: Khoa học chưa giải thích hết mọi hiện tượng.</span>
+                        </li>
+                        <li className="flex gap-2 text-sm text-gray-400">
+                            <span className="text-indigo-400 font-bold">3.</span>
+                            <span>Tâm lý: Nhu cầu an ủi, niềm tin, hy vọng.</span>
+                        </li>
+                     </ul>
+                 </div>
+              </div>
+
+              {/* Bên phải: Giải pháp */}
+              <div className="space-y-6" data-reveal>
+                <Card className="bg-[#1a1c29] border-green-500/30 h-full">
+                    <div className="bg-green-900/20 p-4 border-b border-green-500/20 flex items-center gap-3">
+                        <CheckCircle className="text-green-400" />
+                        <h3 className="text-xl font-bold text-green-100">Phương án Quản trị & Giải quyết</h3>
+                    </div>
+                    <CardContent className="p-6 space-y-6">
+                        {/* Giải pháp quản trị */}
+                        <div>
+                            <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-4">
+                                <Scale className="text-yellow-400" size={20}/>
+                                1. Đảm bảo Tự do & Kỷ luật
+                            </h4>
+                            <ul className="space-y-3 pl-2">
+                                {[
+                                    'Tôn trọng quyền tự do tín ngưỡng của nhân viên (không phân biệt, không cấm đoán).',
+                                    'Phân biệt rõ "tín ngưỡng" và "kỷ luật lao động": nghỉ lễ phải theo quy định chung.',
+                                    'Đối thoại với đại diện nhóm nhân viên, linh hoạt sắp ca nếu không ảnh hưởng sản xuất.',
+                                    'Truyền thông: Tôn trọng tôn giáo nhưng ưu tiên tiến độ chung.'
+                                ].map((txt, i) => (
+                                    <li key={i} className="flex gap-3 text-sm text-gray-300">
+                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span>{txt}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        
+                        <div className="h-px bg-white/10"></div>
+
+                        {/* Giải pháp an ninh */}
+                        <div>
+                            <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-4">
+                                <Shield className="text-blue-400" size={20}/>
+                                2. Ngăn chặn Lợi dụng & Kích động
+                            </h4>
+                            <ul className="space-y-3 pl-2">
+                                {[
+                                    'Tăng truyền thông nội bộ, minh bạch chính sách, tránh để tin đồn lan rộng.',
+                                    'Phối hợp công đoàn, tổ chức Đảng để nắm tình hình tư tưởng.',
+                                    'Không để cá nhân bên ngoài tuyên truyền, kích động trong doanh nghiệp.',
+                                    'Giải quyết mâu thuẫn bằng đối thoại, không đối đầu, không đàn áp.'
+                                ].map((txt, i) => (
+                                    <li key={i} className="flex gap-3 text-sm text-gray-300">
+                                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span>{txt}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        
+                        <div className="bg-green-500/10 p-4 rounded-xl border border-green-500/20 mt-4">
+                            <p className="text-green-400 font-bold text-sm">Kết luận:</p>
+                            <p className="text-gray-300 text-sm mt-1">
+                                Tôn giáo còn tồn tại là tất yếu trong thời kỳ quá độ; quản trị đúng là tôn trọng niềm tin nhưng kiên quyết giữ kỷ luật và ổn định tổ chức.
+                            </p>
+                        </div>
+                    </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
@@ -1118,7 +1270,6 @@ function App() {
               <p className="text-yellow-100 text-lg font-semibold mb-2">© 2025 - Tôn giáo, Gia đình, Dân tộc trong Thời kỳ Quá độ</p>
               <p className="text-yellow-300 font-medium">Chương 6 & 7 - Thực hành Lý luận Chính trị - MLN131_SE1841_SP26</p>
             </div>
-
           </div>
         </footer>
 
