@@ -5,290 +5,152 @@
 @tailwind utilities;
 
 :root {
-  /* --- Bảng màu chuẩn hóa (Harmonized Palette) --- */
-  --bg-page: #f9fafb;
-  --text-main: #1f2937;
+  /* --- Bảng màu Modern Academic (Rose - Slate - Gold) --- */
   
-  /* Red Palette - Chủ đạo */
-  --red-deep: #450a0a;    /* red-950 - Dùng cho nền tối */
-  --red-main: #991b1b;    /* red-800 - Dùng cho brand */
-  --red-bright: #dc2626;  /* red-600 - Dùng cho nút/điểm nhấn */
+  /* Backgrounds */
+  --bg-page: #f8fafc; /* Slate-50: Trắng xám nhẹ, dịu mắt */
+  --bg-card: #ffffff;
   
-  /* Gold Palette - Điểm nhấn */
-  --gold-text: #b45309;   /* amber-700 - Dùng cho chữ trên nền sáng */
-  --gold-accent: #f59e0b; /* amber-500 - Dùng cho icon/viền */
-  --gold-light: #fef3c7;  /* amber-100 - Dùng cho nền nhạt */
+  /* Primary (Chủ đạo - Thay đỏ gắt bằng Đỏ nhung/Rose) */
+  --primary-900: #881337; /* Rose 900 */
+  --primary-700: #be123c; /* Rose 700 */
+  --primary-600: #e11d48; /* Rose 600 */
 
-  /* Text Colors */
-  --text-on-red-body: #fff1f2; /* Hồng phấn rất nhạt/Trắng kem -> Dễ đọc trên nền đỏ */
-  --text-on-red-head: #fcd34d; /* Vàng kim -> Dùng cho tiêu đề trên nền đỏ */
+  /* Neutral (Văn bản) */
+  --text-main: #0f172a; /* Slate 900 */
+  --text-muted: #475569; /* Slate 600 */
   
-  --border-light: #e5e7eb;
-  --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+  /* Accent (Điểm nhấn - Vàng đồng sang trọng) */
+  --gold-500: #d97706; /* Amber 600 */
+  --gold-400: #fbbf24; /* Amber 400 */
+  
+  --border-subtle: #e2e8f0;
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
 .dark {
-  --bg-page: #0f0505;
-  --text-main: #f3f4f6;
+  /* Dark Mode: Deep Navy Theme */
+  --bg-page: #020617; /* Slate 950 */
+  --bg-card: #0f172a; /* Slate 900 */
+  
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  
+  --border-subtle: #1e293b;
 }
-
-* { box-sizing: border-box; }
-
-html, body, #root { height: 100%; }
 
 /* --- Global Settings --- */
 html {
   scroll-behavior: smooth;
   font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
 }
 
 body {
-  margin: 0;
-  overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-page);
   color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+/* --- Components Styling --- */
+
+/* Navigation */
+.nav-blur {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dark .nav-blur {
+  background: rgba(2, 6, 23, 0.8);
+}
+
+/* Hero Section */
+.hero-gradient {
+  /* Gradient Rose-Slate sang trọng */
+  background: radial-gradient(circle at 50% 30%, #470818 0%, #020617 100%);
+}
+
+/* Cards */
+.card-modern {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+}
+.dark .card-modern {
+  border-color: rgba(255,255,255,0.05);
+}
+.card-modern:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-600);
+}
+
+/* Buttons */
+.btn-rose {
+  background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+  color: white;
+  box-shadow: 0 4px 12px rgba(190, 18, 60, 0.3);
+}
+.btn-rose:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Quiz Styling */
+.quiz-opt {
+  transition: all 0.2s;
   background: var(--bg-page);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  @apply transition-colors duration-500;
+  border: 2px solid var(--border-subtle);
+}
+.quiz-opt:hover:not(:disabled) {
+  border-color: var(--primary-600);
+  background: rgba(225, 29, 72, 0.05);
+}
+.quiz-opt.correct {
+  background: #ecfdf5;
+  border-color: #059669;
+  color: #064e3b;
+}
+.dark .quiz-opt.correct {
+  background: #064e3b;
+  border-color: #34d399;
+  color: #fff;
+}
+.quiz-opt.wrong {
+  background: #fff1f2;
+  border-color: #e11d48;
+  color: #881337;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif; /* Font sang trọng cho tiêu đề */
-  letter-spacing: -0.02em;
+/* Case Study Section Specifics */
+.case-card {
+  position: relative;
+  overflow: hidden;
 }
-
-/* --- Scrollbar --- */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #2c0b0e; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #7f1d1d, #b45309);
-  border-radius: 4px;
+.case-card::before {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  width: 100%;
+  height: 4px;
 }
-::-webkit-scrollbar-thumb:hover { background: #991b1b; }
+.case-conflict::before { background: #e11d48; } /* Red top border */
+.case-solution::before { background: #059669; } /* Green top border */
 
-/* --- Animation Classes --- */
+/* Animations */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  will-change: opacity, transform;
+  transform: translateY(20px);
+  transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* --- Navigation Harmonized --- */
-nav {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 215, 110, 0.15);
-  background: rgba(255, 255, 255, 0.9);
-}
-.dark nav {
-  background: rgba(30, 10, 10, 0.85);
-  border-bottom: 1px solid rgba(255, 215, 110, 0.1);
-}
-
-/* --- HERO SECTION REFINED --- */
-#hero {
-  background: radial-gradient(circle at 50% 30%, #500707 0%, #2b0505 100%);
-}
-/* Làm dịu text gradient để dễ đọc hơn */
-.hero-stack span {
-  background: linear-gradient(180deg, #ffe185, #fbbf24); 
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-}
-
-/* --- RED THEME SECTIONS (Đại Đoàn Kết, Mác Lênin...) --- */
-/* Cải thiện khả năng đọc trên nền đỏ */
-.section-red-theme {
-  color: var(--text-on-red-body);
-}
-.section-red-theme h1, 
-.section-red-theme h2, 
-.section-red-theme h3 {
-  color: var(--text-on-red-head);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-}
-.section-red-theme p {
-  color: rgba(255, 255, 255, 0.9); /* Trắng đục thay vì vàng nhạt */
-  font-weight: 400;
-}
-
-/* --- CARDS & PANELS HARMONIZATION --- */
-
-/* Các Card nền tối (trong Dark mode hoặc Section đỏ) */
-.bg-dark-card {
-  background: rgba(30, 10, 10, 0.6); /* Nền tối hơn để chữ trắng nổi bật */
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 215, 110, 0.15); /* Viền vàng cực nhạt */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-/* Các Card nền sáng (Light mode) */
-.bg-light-card {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(153, 27, 27, 0.1); /* Viền đỏ nhạt */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  color: var(--text-main);
-}
-
-/* --- ĐẠI ĐOÀN KẾT LAYOUT (Refined) --- */
-.dai-doan-ket-layout { 
-  position: relative; 
-  padding: 80px 20px; 
-  background: radial-gradient(circle at center, #7f1d1d 0%, #450a0a 100%);
-  overflow: hidden;
-}
-
-.dai-doan-ket-title {
-  color: #fbbf24; /* Amber-400: Vàng ấm, dễ đọc hơn vàng chanh */
-  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-/* Khung trung tâm */
-.center-frame {
-  background: linear-gradient(145deg, rgba(40, 5, 5, 0.95), rgba(20, 0, 0, 0.95));
-  border: 2px solid #b45309; /* Viền cam đất sang trọng hơn vàng tươi */
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-}
-.center-content h3 { color: #fcd34d; } /* Vàng sáng */
-.center-content p { color: #e5e7eb; } /* Trắng xám - Rất dễ đọc */
-
-/* Vòng tròn vệ tinh */
-.circle-image {
-  border: 3px solid #d97706; /* Amber-600 */
-}
-.content-text h4 {
-  color: #fcd34d; /* Tiêu đề vàng */
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-.content-text p {
-  color: #ffffff; /* Nội dung trắng tinh khiết để tối đa tương phản */
-  font-weight: 500;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.9); /* Shadow đậm giúp chữ tách khỏi nền */
-  background: rgba(0,0,0,0.3); /* Nền mờ nhẹ cục bộ cho text */
-  padding: 8px 12px;
-  border-radius: 8px;
-  backdrop-filter: blur(4px);
-}
-
-/* --- MESSAGE SECTION (Case Study) --- */
-.message-section { 
-  background: linear-gradient(180deg, #2b0505 0%, #1a0202 100%);
-}
-
-.message-core .bg-white\/10 {
-  /* Chỉnh lại card message để dễ đọc hơn */
-  background: rgba(20, 5, 5, 0.7) !important; /* Tăng độ tối nền card */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.message-core p {
-  color: #e5e5e5 !important; /* Trắng xám */
-}
-.message-core .text-yellow-400 { color: #fbbf24 !important; } /* Vàng ấm */
-
-/* --- AI TRANSPARENCY SECTION (Harmonized) --- */
-/* Chuyển từ Neon Xanh/Tím sang Tech Gold/Red để hợp tông với web */
-
-.ai-transparency-section {
-  background: #0a0000; /* Đen thuần */
-  position: relative;
-}
-
-/* Override các hiệu ứng màu của AI section */
-.ai-transparency-section::before {
-  /* Glow chuyển sang đỏ/cam */
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 50%);
-}
-
-/* Text Gradient cho AI section */
-.ai-transparency-section .bg-clip-text {
-  background-image: linear-gradient(to right, #ef4444, #f59e0b, #ef4444); /* Đỏ -> Vàng -> Đỏ */
-}
-
-/* Card trong AI section */
-.ai-transparency-section .group .bg-gray-900\/50,
-.ai-transparency-section .group .backdrop-blur-xl {
-  background: rgba(30, 5, 5, 0.6);
-  border-color: rgba(220, 38, 38, 0.3);
-}
-
-.ai-transparency-section .group:hover {
-  border-color: #f59e0b; /* Hover ra màu vàng */
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
-}
-
-/* Glitch effect màu đỏ/vàng */
-.glitch-text::before { color: #ef4444; }
-.glitch-text::after { color: #f59e0b; }
-
-/* Holographic chuyển sang tone ấm */
-.ai-transparency-section .holographic {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(220, 38, 38, 0.4) 20%,
-    rgba(245, 158, 11, 0.4) 50%,
-    rgba(220, 38, 38, 0.4) 80%,
-    transparent 100%
-  );
-}
-
-/* --- BUTTONS --- */
-.btn-cta {
-  background: linear-gradient(135deg, #b91c1c, #991b1b);
-  color: #fff;
-  border: 1px solid #ef4444;
-  box-shadow: 0 4px 15px rgba(185, 28, 28, 0.4);
-}
-.btn-cta:hover {
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(185, 28, 28, 0.6);
-}
-
-/* --- QUIZ SECTION --- */
-.quiz-box {
-  background: rgba(30, 10, 10, 0.8);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-}
-.quiz-box .q { color: #fff; font-size: 1.1rem; }
-.quiz-box .opts button {
-  background: rgba(255, 255, 255, 0.05);
-  color: #e5e7eb;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.2s;
-}
-.quiz-box .opts button:hover {
-  background: rgba(251, 191, 36, 0.15); /* Hover vàng nhẹ */
-  border-color: #fbbf24;
-  color: #fbbf24;
-}
-.quiz-box .opts button.selected {
-  background: #7f1d1d;
-  border-color: #ef4444;
-  color: white;
-}
-
-/* --- Responsive Text Adjustments --- */
-@media (max-width: 768px) {
-  .dai-doan-ket-title {
-    font-size: 28px;
-    margin-bottom: 40px;
-  }
-  .content-text p {
-    font-size: 13px; /* Tăng size chữ trên mobile */
-    background: rgba(0,0,0,0.6); /* Nền tối hơn trên mobile để dễ đọc */
-  }
 }
